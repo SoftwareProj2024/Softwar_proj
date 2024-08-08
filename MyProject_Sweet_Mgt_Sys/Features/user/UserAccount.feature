@@ -36,14 +36,10 @@ Feature: User Account
     And user returns to dash
   
   
-  Scenario: User updates his username 
-    Given the user is logged in 
-    When the user when the user chooses manage account and then update account And the user chooses update "username" and enters a new username "khader"  
-    Then update successful 
-    And user returns to dash
-  
-  
-  
-  
+ 
+  Scenario: User posts and shares a personal dessert creation
+    Given the user is logged in
+    When the user posts a new dessert creation with title "Chocolate Cake" and description "Delicious and rich chocolate cake"
+    Then the dessert creation should be visible in the user's shared creations
   
   

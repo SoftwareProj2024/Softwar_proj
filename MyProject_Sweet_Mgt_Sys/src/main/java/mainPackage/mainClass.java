@@ -9,7 +9,10 @@ public class mainClass {
 
 		
 		MyApp a=new MyApp();		
-		System.out.println("username: ");
+		a.login("musa", "123", "user");
+		a.updateAccount("musa", "123456", "user");
+		a.postDessertCreation("cokkies", "2 sugar and 3tea");
+		
 
 
 		
