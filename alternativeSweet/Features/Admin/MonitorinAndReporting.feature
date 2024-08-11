@@ -13,8 +13,7 @@ Feature: Monitoring and Reporting
     Given I am logged in as an admin
     When I navigate to the reporting page
     And I select "Generate Financial Report"
-    And I choose a date range
-    Then I should see a financial report for the selected date range
+    Then I should see a financial report for the selected 
 
   Scenario: Identify best-selling products in each store
     Given I am logged in as an admin

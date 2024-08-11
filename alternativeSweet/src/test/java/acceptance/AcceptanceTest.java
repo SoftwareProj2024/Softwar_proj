@@ -10,7 +10,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(
 
-        features = "Features/owner_supplier/OrderManagement.feature",
+        features = "Features/Admin/MonitorinAndReporting.feature",
         plugin = {"html:target/cucumber-report/report.html"},
         monochrome = true,
         glue = "acceptance"

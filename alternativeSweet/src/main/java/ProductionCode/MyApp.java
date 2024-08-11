@@ -44,6 +44,7 @@ public class MyApp {
 	private String currentPage;
 
 	 private Order currentOrder;
+	public boolean reportShown;
 	   
     public MyApp() throws FileNotFoundException, IOException {
         super();
@@ -350,7 +351,7 @@ public class MyApp {
     }
 
     public void navigateTo(String page) {
-        if (StoreOwnerLoggedIn || MaterialSupplierLoggedIn) {
+        if (StoreOwnerLoggedIn || MaterialSupplierLoggedIn||AdminLoggedIn) {
             currentPage = page;
         } else {
             throw new AssertionError("User not logged in or invalid user role.");
@@ -612,5 +613,37 @@ public class MyApp {
     public boolean isOnPage(String page) {
         return currentPage.equals(page);
     }
+
+	public void selectReport(String profitReports) throws FileNotFoundException, IOException {
+		// TODO Auto-generated method stub
+		if (profitReports.equals("Profit Reports")) {
+			 try (BufferedReader br = new BufferedReader(new FileReader("files/purchasedProducts.txt"))) {
+		            String line;
+		            double TotalSales = 0;
+		            double Profit = 0;
+		            int quantity = 0;
+		            while ((line = br.readLine()) != null) {
+		                String[] parts = line.split(",");
+		                if (parts.length == 3) {
+		                    String purchasedName = parts[0];
+		                    String quan = parts[1];
+		                    String purchasedPrice = parts[2];
+		                    TotalSales += (Double.parseDouble(purchasedPrice) * Double.parseDouble(quan));
+		                    quantity += Double.parseDouble(quan);
+		                }
+		            }
+		            Profit = TotalSales - quantity * 50;
+		            System.out.println("The profit is: " + Profit);
+		            reportGenerated = true;
+		        }
+		reportShown=true;
+		}
+		if (profitReports.equals("Generate Financial Report")) {
+			this.getSalesReport();
+		}
+		
+		
+		
+	}
 }
 
