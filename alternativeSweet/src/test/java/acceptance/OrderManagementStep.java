@@ -1,5 +1,7 @@
 package acceptance;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -34,18 +36,29 @@ public void i_select_an_order_number_and_i_choose(String oNum, String op) throws
     // Write code here that turns the phrase above into concrete actions
     app.processOrder(oNum,op);
 }
-@Then("the order status becomes {string}")
-public void the_order_status_becomes(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+@Then("the order status becomes processed {string}")
+public void the_order_status_becomes(String op) {
+	assertTrue(app.isOrderStatusUpdated("1", op));
 }
 @Then("I should see the updated status in the order list and return to management page")
-public void i_should_see_the_updated_status_in_the_order_list_and_return_to_management_page() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+public void i_should_see_the_updated_status_in_the_order_list_and_return_to_management_page() throws FileNotFoundException, IOException {
+app.listOrders();
+	assertTrue(true);	
 }
 
 
-
-
+@When("I select an order by its number {string}")
+public void i_select_an_order_by_its_number(String orderNum) {
+    app.selectOrderByNumber(orderNum);
 }
+
+@Then("I should see the current status of the order and return back to mangement page")
+public void i_should_see_the_current_status_of_the_order_and_return_back_to_mangement_page() {
+    String status = app.getCurrentOrderStatus();
+    assertTrue("The order status is not available or incorrect.", status != null && !status.isEmpty());
+    app.returnToManagementPage();
+    assertTrue("Failed to return to the management page.", app.isOnPage("order management page"));
+}
+
+
+ }

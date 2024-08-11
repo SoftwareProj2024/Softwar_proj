@@ -12,7 +12,7 @@ Feature: Order Management
     Given I am logged in as a store owner
     And I am on the order management page
     When I select an order number "1" and I choose "Process"
-    Then the order status becomes "processed"
+    Then the order status becomes processed "processed"
     And I should see the updated status in the order list and return to management page
 
   Scenario: Track order status
