@@ -37,7 +37,12 @@ public class MyApp {
 	public boolean deletedProductSuccessfully;
 	public boolean reportGenerated;
 	public boolean discountMessagepos;
-
+	public boolean messageSentToUser;
+	public boolean messageSentToSupplier;
+	private String loggedName;
+	private String ROLE;
+	private String loggedPassword;
+private ArrayList<Order> orders;
 
     
     public MyApp() throws FileNotFoundException, IOException {
@@ -48,7 +53,8 @@ public class MyApp {
         this.material_suppliers = new ArrayList<>();
         this.admin = new ArrayList<>();
         this.Products=new ArrayList<>();
-
+        this.orders=new ArrayList<>();
+        
         loadData("files/users.txt", "user");
         loadData("files/store_owners.txt", "Store_owner");
         loadData("files/material_suppliers.txt", "Material_supplier");
@@ -136,6 +142,9 @@ public class MyApp {
                 }else if (obj instanceof Product) {
                     writer.write(((Product) obj).getProductName() + "," + ((Product) obj).getPrice()+","+((Product) obj).getExpDate());
                 }
+                else if (obj instanceof Order) {
+                    writer.write(((Order) obj).orderNum + "," + ((Order) obj).senderName+","+((Order) obj).reciver+","+((Order) obj).productName+","+((Order) obj).status);
+                }
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -150,6 +159,9 @@ public class MyApp {
                         isUserLoggedIn = true;
                         UserLoggedIn = true;
                         openUserDash();
+                        loggedName=username;
+                        ROLE="user";
+                        loggedPassword=password;
                         return;
                     }
                 }
@@ -160,7 +172,9 @@ public class MyApp {
                     if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                         isUserLoggedIn = true;
                         StoreOwnerLoggedIn = true;
-                        ownerName=username;
+                        loggedName=username;
+                        ROLE="Store_owner";
+                        loggedPassword=password;
                         return;
                     }
                 }
@@ -170,6 +184,9 @@ public class MyApp {
                     if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                         isUserLoggedIn = true;
                         MaterialSupplierLoggedIn = true;
+                        loggedName=username;
+                        ROLE="Material_supplier";
+                        loggedPassword=password;
                         return;
                     }
                 }
@@ -179,6 +196,9 @@ public class MyApp {
                     if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                         isUserLoggedIn = true;
                         AdminLoggedIn = true;
+                        loggedName=username;
+                        ROLE="Admin";
+                        loggedPassword=password;
                         return;
                     }
                 }
@@ -504,6 +524,135 @@ public class MyApp {
 		
 		
 		
+	}
+
+	public void sendMessageToUser(String username, String message) {
+		// TODO Auto-generated method stub
+		
+		String path ="files/messagesToSuppliers.txt";
+		
+        String content = username+", "+message;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path,true))) {
+            writer.write(content);
+            writer.newLine(); // Optional: add a new line after the content
+            System.out.println("File has been written successfully.");
+            messageSentToUser=true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		 		
+		
+		
+	}
+
+	public void sendMessageToSupplier(String supplierName, String message) {
+		// TODO Auto-generated method stub
+		
+String path ="files/messagesToUsers.txt";
+		
+        String content = supplierName+", "+message;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path,true))) {
+            writer.write(content);
+            writer.newLine(); // Optional: add a new line after the content
+            System.out.println("File has been written successfully.");
+            messageSentToSupplier=true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		 		
+		
+		
+	
+		
+	}
+
+	public void sendMessageToOwner(String ownerName2, String message) {
+		// TODO Auto-generated method stub
+String path ="files/messagesToOwner.txt";
+		
+        String content = ownerName2+", "+message;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path,true))) {
+            writer.write(content);
+            writer.newLine(); // Optional: add a new line after the content
+            System.out.println("File has been written successfully.");
+            messageSentToSupplier=true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+	}
+
+	public void showAccountDetails() {
+		// TODO Auto-generated method stub
+		System.out.println("Account name : "+this.loggedName);
+		System.out.println("Account password : "+this.loggedPassword);
+		System.out.println("Account role : "+this.ROLE);
+		
+	}
+
+	public void EditBusinessInformation(String op, String accName, String password) {
+		// TODO Auto-generated method stub
+		if(op.equals("Edit Business Information")) {
+			updateUser(loggedName, accName, password);
+			
+		}
+		
+	}
+
+	public void listOrders() throws FileNotFoundException, IOException {
+// TODO Auto-generated method stub
+
+		
+		try (BufferedReader br = new BufferedReader(new FileReader("files/orders.txt"))) {
+            String line;
+            
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                	String ordernum= parts[0];
+                    String StoreOwner = parts[1];
+                    String reciever = parts[2];
+                    String productname =parts[3];
+                    String status=parts[4];
+
+                    System.out.println(ordernum+", "+StoreOwner+", "+reciever+", "+productname+", "+status);
+                    
+                }
+            } 
+                
+                    }
+	}
+
+	public void processOrder(String oNum, String op) throws IOException {
+		// TODO Auto-generated method stub
+		try (BufferedReader br = new BufferedReader(new FileReader("files/orders.txt"))) {
+            String line;
+            
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                	String ordernum= parts[0];
+                    String StoreOwner = parts[1];
+                    String reciever = parts[2];
+                    String productname =parts[3];
+                    String status=parts[4];
+
+                    if (oNum.equals(ordernum)) {
+						
+					Order o=new Order(ordernum, StoreOwner, reciever, productname, status);
+					orders.add(o);
+					rewriteFile("files/orders.txt", orders);
+					
+                    
+                                        
+                }
+            } 
+                
+                    }
+		}
 	}
 
 	
