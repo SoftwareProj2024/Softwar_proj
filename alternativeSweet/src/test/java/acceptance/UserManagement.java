@@ -15,23 +15,25 @@ public class UserManagement {
 
     MyApp app;
 
-    @Given("I am logged in as an admin")
+    public UserManagement(MyApp app) {
+		super();
+		this.app = app;
+	}
+
+	@Given("I am logged in as an admin")
     public void i_am_logged_in_as_an_admin() throws FileNotFoundException, IOException {
-        app = new MyApp();
         app.login("mohammad123", "123", "Admin");
         assertTrue(app.AdminLoggedIn);
     }
 
     @Given("I am on the admin dashboard")
     public void i_am_on_the_admin_dashboard() throws FileNotFoundException, IOException {
-        app = new MyApp();
         app.AdminDashboardpage();
         assertTrue(app.adminDashbordOpen);
     }
 
     @Given("I select {string} from the dashboard options")
     public void i_select_from_the_dashboard_options(String option) throws FileNotFoundException, IOException {
-        app = new MyApp();
         app.AdminDashboardOptiones("1");
     }
 

@@ -1,10 +1,11 @@
-package ProductionCode;
+  package ProductionCode;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import ProductionCode.*;
 
 public class MyApp {
 
@@ -42,12 +43,16 @@ public class MyApp {
     private String loggedPassword;
     private ArrayList<Order> orders;
 	private String currentPage;
+    public boolean    contentManagementPageOpen ;
 
 	 private Order currentOrder;
 	public boolean reportShown;
+	
+	public ContentManagement contentmanagement;
 	   
     public MyApp() throws FileNotFoundException, IOException {
         super();
+        contentmanagement = new ContentManagement();
 
         this.users = new ArrayList<>();
         this.store_owners = new ArrayList<>();
@@ -322,8 +327,14 @@ public class MyApp {
                 MonitorAndReport();
                 break;
             case "3":
-                ContentManagement();
-                break;
+            	   contentManagementPageOpen = true;
+            	   
+            	   System.out.println("1. View Recipe");
+                   System.out.println("2. Delete Recipe");
+                   System.out.println("3. View feedback");
+                   System.out.println("4. Respond feedback");
+                   System.out.println("5. Delete feedback");
+            	   break;
         }
     }
 
@@ -340,10 +351,7 @@ public class MyApp {
         System.out.println(message);
     }
 
-    private void ContentManagement() {
-        // TODO Auto-generated method stub
-
-    }
+   
 
     private void MonitorAndReport() {
         // TODO Auto-generated method stub
