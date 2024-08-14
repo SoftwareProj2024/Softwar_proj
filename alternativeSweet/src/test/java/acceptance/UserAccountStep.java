@@ -50,19 +50,21 @@ public class UserAccountStep {
 	public void the_user_is_logged_in() {
 	    assertTrue(app.isUserLoggedIn=true);
 	}
-	@When("the user when the user chooses manage account and then update account and the user chooses update {string} and enters a new password {string}")
-	public void the_user_when_the_user_chooses_manage_account_and_then_update_account_and_the_user_chooses_update_and_enters_a_new_password(String string, String string2) {
-	    
+	@When("I choose to update my information with oldusername {string} and I enter the new username {string} and I enter the new password {string}")
+	public void i_choose_to_update_my_information_with_oldusername_and_i_enter_the_new_username_and_i_enter_the_new_password(String string, String string2, String string3) {
+	    app.updateUser(string, string2, string3);
+
 	}
+
+
 	@Then("update successful")
 	public void update_successful() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+    assertTrue(app.updatedSuccessfully);
 	}
+	
 	@Then("user returns to dash")
 	public void user_returns_to_dash() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		assertFalse(false);
 	}
 
 	

@@ -49,11 +49,15 @@ public class MyApp {
 	public boolean reportShown;
 	
 	public ContentManagement contentmanagement;
-	   
+	
+	    public User user;
+
     public MyApp() throws FileNotFoundException, IOException {
         super();
+        this.user = new User();
+        this.user.setApp(this); 
         contentmanagement = new ContentManagement();
-
+        user =new User();
         this.users = new ArrayList<>();
         this.store_owners = new ArrayList<>();
         this.material_suppliers = new ArrayList<>();
@@ -613,7 +617,6 @@ public class MyApp {
             return null;
         }
     }
-
     public void returnToManagementPage() {
         navigateTo("order management page");
     }
@@ -652,6 +655,9 @@ public class MyApp {
 		
 		
 		
+	}
+	public String getCurrentUsername() {
+		return loggedName;
 	}
 }
 

@@ -31,16 +31,11 @@ Feature: User Account
     
   Scenario: User updates his password 
     Given the user is logged in 
-    When the user when the user chooses manage account and then update account and the user chooses update "password" and enters a new password "123456" 
+    When I choose to update my information with oldusername "ahmad" and I enter the new username "ahmad" and I enter the new password "newpassword" 
     Then update successful 
     And user returns to dash
   
-  
-  Scenario: User updates his username 
-    Given the user is logged in 
-    When the user when the user chooses manage account and then update account And the user chooses update "username" and enters a new username "khader"  
-    Then update successful 
-    And user returns to dash
+
   
   
   
