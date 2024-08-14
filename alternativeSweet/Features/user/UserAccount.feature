@@ -34,6 +34,11 @@ Feature: User Account
     When I choose to update my information with oldusername "ahmad" and I enter the new username "ahmad" and I enter the new password "newpassword" 
     Then update successful 
     And user returns to dash
+    
+    Scenario: User make some Purchase
+    Given the user is logged in 
+    When i chose purchase optione then enter the product name "milk" and quntity "2" 
+    Then user returns to dash
   
 
   

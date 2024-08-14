@@ -67,6 +67,12 @@ public class UserAccountStep {
 		assertFalse(false);
 	}
 
+	@When("i chose purchase optione then enter the product name {string} and quntity {string}")
+	public void i_chose_purchase_optione_then_enter_the_product_name_and_quntity(String string, String string2) {
+		int number = Integer.parseInt(string2);
+
+	   app.user.purchaseProduct(string2, number);
+	}
 	
 	
 }
