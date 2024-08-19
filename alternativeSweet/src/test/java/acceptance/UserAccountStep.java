@@ -67,12 +67,22 @@ public class UserAccountStep {
 		assertFalse(false);
 	}
 
-	@When("i chose purchase optione then enter the product name {string} and quntity {string}")
-	public void i_chose_purchase_optione_then_enter_the_product_name_and_quntity(String string, String string2) {
-		int number = Integer.parseInt(string2);
-
-	   app.user.purchaseProduct(string2, number);
+//	@When("i chose purchase optione then enter the product name {string} and quntity {string}")
+//	public void i_chose_purchase_optione_then_enter_the_product_name_and_quntity(String string, String string2) {
+//		int number = Integer.parseInt(string2);
+//
+//	   app.user.purchaseProduct(string2, number);
+//	}
+	@When("I choose to post a new dessert creation with name {string}, ingredients {string}")
+	public void i_choose_to_post_a_new_dessert_creation_with_name_ingredients(String string, String string2) {
+    app.user.PostAndSharePersonalDessert(string, string2);
 	}
+	
+	@Then("the dessert creation should be shared successfully")
+	public void the_dessert_creation_should_be_shared_successfully() {
+    assertTrue(app.user.RecipeAddedSuccessfully);
+	}
+
 	
 	
 }

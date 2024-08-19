@@ -16,6 +16,8 @@ public class User {
     private String password;
     public boolean receivedAPurchasedDessert;
     private MyApp app;
+    public boolean RecipeAddedSuccessfully;
+    public boolean RecipeFound;
 
     // Constructor with username and password
     public User(String username, String password) {
@@ -100,7 +102,8 @@ public class User {
 //            System.out.println("No user is currently logged in.");
 //            return;
 //        }
-
+        MyApp app = null;
+    	currentUsername=app.loggedName;
         // Step 1: Check if the product exists in the products file
         boolean productAvailable = false;
         try (BufferedReader productReader = new BufferedReader(new FileReader(PRODUCTS_FILE_PATH))) {
@@ -232,5 +235,94 @@ public class User {
     }
     */
 
+    
+    
+    
+    public void PostAndSharePersonalDessert(String Recipes, String theComponents) {
+        String filePath = "C:\\Users\\THINKPAD\\git\\Softwar_proj\\alternativeSweet\\files\\recipes.txt";
+        
+        // Combine the recipe name and components with a colon separator
+        String recipeEntry = Recipes + ":" + theComponents;
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            // Write the entry to the file and add a newline
+            writer.write(recipeEntry);
+            writer.newLine();
+            System.out.println("Recipe added successfully!");
+            RecipeAddedSuccessfully=true;
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void SearchDessertRecipes(String recipesname) {
+        String filePath = "C:\\Users\\THINKPAD\\git\\Softwar_proj\\alternativeSweet\\files\\recipes.txt";
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean found = false;
+            
+            while ((line = reader.readLine()) != null) {
+                // Split the line into recipe name and components
+                String[] parts = line.split(":");
+                
+                if (parts.length == 2) {
+                    String name = parts[0].trim();
+                    String components = parts[1].trim();
+                    
+                    // Check if the recipe name matches the search term
+                    if (name.equalsIgnoreCase(recipesname.trim())) {
+                        System.out.println("Recipe found: " + line);
+                        found = true;
+                        RecipeFound=true;
+                        break;
+                    }
+                }
+            }
+            
+            if (!found) {
+                System.out.println("Recipe not found.");
+            }
+            
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the file.");
+            e.printStackTrace();
+        }}
   
+    public void filterRecipes(String ingredient) {
+        String filePath = "C:\\Users\\THINKPAD\\git\\Softwar_proj\\alternativeSweet\\files\\recipes.txt";
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean found = false;
+            
+            while ((line = reader.readLine()) != null) {
+                // Split the line into recipe name and components
+                String[] parts = line.split(":");
+                
+                if (parts.length == 2) {
+                    String components = parts[1].trim();
+                    
+                    // Check if the components contain the ingredient
+                    if (components.toLowerCase().contains(ingredient.toLowerCase())) {
+                        System.out.println("Matching recipe: " + line);
+                        found = true;
+                       
+                    }
+                }
+            }
+            
+            if (!found) {
+                System.out.println("No recipes found containing the ingredient: " + ingredient);
+            }
+            
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the file.");
+            e.printStackTrace();
+        }
+    }
+
+    
 }
