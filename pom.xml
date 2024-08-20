@@ -24,9 +24,14 @@
     <artifactId>cucumber-picocontainer</artifactId>
     <version>7.18.1</version>
 </dependency>
+
+  
   
   </dependencies>
 
-  
+  <properties>
+  <sonar.organization>softwareproj2024</sonar.organization>
+  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+</properties>
   
 </project>
