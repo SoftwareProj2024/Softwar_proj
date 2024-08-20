@@ -1,6 +1,8 @@
 package ProductionCode;
 
 public class Admin {
+
+	
 	private String username;
 	private String password;
 	public Admin(String username, String password) {
