@@ -1,9 +1,0 @@
-1,ahmad,5,molto
-1,null,3,milk
-1,null,2,milk
-1,null,2,milk
-1,null,2,milk
-1,null,2,milk
-2,null,8,appel
-1,m,33,appel
-2,musa,99,mosdfo
